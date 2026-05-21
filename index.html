@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="輸入台股代碼與日期區間，查詢台灣證交所日成交資料並繪製收盤價折線圖。" />
+    <meta property="og:title" content="台股日資料查詢" />
+    <meta property="og:description" content="查詢台股日成交資料、摘要指標與收盤價折線圖。" />
+    <meta property="og:type" content="website" />
+    <title>台股日資料查詢</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="query-panel" aria-label="查詢條件">
+        <div class="brand-block">
+          <p class="eyebrow">TWSE STOCK_DAY</p>
+          <h1>台股日資料查詢</h1>
+        </div>
+
+        <form id="queryForm" class="query-form">
+          <label>
+            <span>股票代碼</span>
+            <input id="stockCode" name="stockCode" value="0050" inputmode="latin" autocomplete="off" required />
+          </label>
+          <label>
+            <span>開始日期</span>
+            <input id="startDate" name="startDate" type="date" required />
+          </label>
+          <label>
+            <span>結束日期</span>
+            <input id="endDate" name="endDate" type="date" required />
+          </label>
+          <button type="submit">查詢</button>
+        </form>
+
+        <p id="status" class="status" role="status">輸入代碼與日期區間後查詢。</p>
+      </section>
+
+      <section class="summary-grid" aria-label="摘要">
+        <div>
+          <span>交易日數</span>
+          <strong id="metricDays">-</strong>
+        </div>
+        <div>
+          <span>期末收盤</span>
+          <strong id="metricClose">-</strong>
+        </div>
+        <div>
+          <span>期間漲跌</span>
+          <strong id="metricReturn">-</strong>
+        </div>
+        <div>
+          <span>最高收盤</span>
+          <strong id="metricHigh">-</strong>
+        </div>
+      </section>
+
+      <section class="chart-section" aria-label="收盤價折線圖">
+        <div class="section-heading">
+          <h2>收盤價走勢</h2>
+          <span id="chartRange">尚未查詢</span>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="priceChart" width="1200" height="520"></canvas>
+        </div>
+      </section>
+
+      <section class="table-section" aria-label="日資料表">
+        <div class="section-heading">
+          <h2>日成交資料</h2>
+          <button id="downloadCsv" type="button" disabled>下載 CSV</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>日期</th>
+                <th>開盤</th>
+                <th>最高</th>
+                <th>最低</th>
+                <th>收盤</th>
+                <th>漲跌</th>
+                <th>成交股數</th>
+                <th>成交金額</th>
+                <th>成交筆數</th>
+              </tr>
+            </thead>
+            <tbody id="priceRows">
+              <tr>
+                <td colspan="9" class="empty-cell">尚無資料</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
